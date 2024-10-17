@@ -43,8 +43,7 @@ function Tree({ nodes }: TreeComponentProps) {
       const descendants = getDescendants(treeData, nodeId);
       setHighlightedNodes([nodeId, ...descendants]);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [treeData]
+    [treeData, highlightedNodes]
   );
 
   return (
