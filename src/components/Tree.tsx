@@ -13,6 +13,7 @@ import {
   transformToFlatStructure,
   transformToRecursiveStructure,
 } from '../utils';
+import TreeItem from './TreeItem';
 
 interface TreeComponentProps {
   nodes: ImglyNode[] | undefined;
@@ -59,20 +60,14 @@ function Tree({ nodes }: TreeComponentProps) {
           draggingSource: 'opacity-30',
         }}
         render={(node, { depth, isOpen, onToggle }) => (
-          <div
-            style={{ marginLeft: depth * 30 }}
-            className={`text-xl cursor-pointer hover:bg-gray-200 ${
-              highlightedNodes.includes(node.id.toString())
-                ? 'bg-yellow-200'
-                : 'bg-transparent'
-            }`}
-            onClick={() => handleClick(node)}
-          >
-            {node.droppable && (
-              <span onClick={onToggle}>{isOpen ? '[-]' : '[+]'}</span>
-            )}
-            &#8226; {node.text}
-          </div>
+          <TreeItem
+            depth={depth}
+            node={node}
+            highlightedNodes={highlightedNodes}
+            isOpen={isOpen}
+            handleClick={handleClick}
+            onToggle={onToggle}
+          />
         )}
       />
     </DndProvider>
