@@ -4,6 +4,7 @@ import { fetchNodeInfo } from '../api';
 import { useCallback, useMemo } from 'react';
 import Accordion from './Accordion';
 import Spinner from './Spinner';
+import ErrorMessage from './ErrorMessage';
 
 interface TreeItemProps {
   depth: number;
@@ -26,7 +27,7 @@ function TreeItem({
   onToggle,
   setOpenAccordionId,
 }: TreeItemProps) {
-  const { refetch, data, isLoading } = useQuery({
+  const { refetch, data, isLoading, error } = useQuery({
     queryKey: ['nodeInfo', node.id],
     queryFn: () => fetchNodeInfo(node.id.toString()),
     enabled: false,
@@ -69,6 +70,7 @@ function TreeItem({
         &#8226; {node.text}
         {isLoading && <Spinner />}
       </div>
+      {error && <ErrorMessage message={error.message} />}
       {data && isAccordionOpen && (
         <Accordion>
           <dl className="space-y-2">
