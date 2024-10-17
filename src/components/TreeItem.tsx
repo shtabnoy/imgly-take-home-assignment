@@ -56,9 +56,9 @@ function TreeItem({
   return (
     <div
       style={{ marginLeft: depth * 30 }}
-      className={`text-xl cursor-pointer hover:bg-gray-200 ${
+      className={`text-xl cursor-pointer hover:bg-blue-200 dark:hover:bg-green-600 ${
         highlightedNodes.includes(node.id.toString())
-          ? 'bg-yellow-200'
+          ? 'bg-blue-300 dark:bg-green-700'
           : 'bg-transparent'
       }`}
       onClick={() => handleClick(node)}

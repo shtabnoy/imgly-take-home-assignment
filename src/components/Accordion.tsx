@@ -4,7 +4,7 @@ interface AccordionProps {
 
 function Accordion({ children }: AccordionProps) {
   return (
-    <div className="bg-white text-black p-4 rounded shadow-lg mt-2 text-base">
+    <div className="bg-white dark:bg-gray-800 text-black dark:text-white p-4 rounded shadow-lg mt-2 text-base">
       {children}
     </div>
   );

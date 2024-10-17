@@ -56,7 +56,7 @@ function Tree({ nodes }: TreeComponentProps) {
         rootId={'0'}
         classes={{
           root: 'p-10',
-          dropTarget: 'bg-yellow-400',
+          dropTarget: 'bg-blue-400 dark:bg-green-800',
           draggingSource: 'opacity-30',
         }}
         onDrop={handleDrop}
