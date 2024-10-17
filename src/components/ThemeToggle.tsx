@@ -9,6 +9,7 @@ function ThemeToggle() {
         {theme === 'light' ? 'Light Theme' : 'Dark Theme'}
       </span>
       <button
+        aria-label="Toggle theme"
         onClick={toggleTheme}
         className="p-2 bg-gray-200 dark:bg-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
       >

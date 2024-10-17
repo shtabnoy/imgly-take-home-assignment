@@ -13,6 +13,7 @@ function App() {
   } = useQuery<ImglyNode[]>({
     queryKey: ['nodes'],
     queryFn: fetchNodes,
+    retry: false,
   });
 
   return (

@@ -51,6 +51,7 @@ function TreeItem({
 
   return (
     <div
+      data-testid={node.id}
       style={{ marginLeft: depth * 30 }}
       className={`text-xl p-2 cursor-pointer hover:bg-blue-200 dark:hover:bg-green-600 ${
         highlightedNodes.includes(node.id.toString())
