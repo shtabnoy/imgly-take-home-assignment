@@ -1,12 +1,12 @@
 /// <reference types="vite/client" />
 
-interface DataEntry {
+interface ImglyNode {
   label: string;
   id?: string;
   children?: DataEntry[];
 }
 
-interface LeafInfo {
+interface ImglyLeafNodeInfo {
   id: string;
   createdAt: string;
   createdBy: string;

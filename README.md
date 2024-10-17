@@ -11,7 +11,21 @@ renders it on the screen, and allows a user to interact with it (e.g., higlight 
 
 1. It uses basic Vite template react + typescript.
 2. Jest, and react-testing-library (RTL) for testing.
-5. TanStack Query for data fetching and state management.
+3. TanStack Query for data fetching and state management.
+4. React DnD Treeview for rendering tree structures and implementing drag-and-drop functionality.
+
+### Motivation
+
+A quick research showed that there are a few libraries that could be used to achieve the assignment goals, e.g.
+render a tree structure, higlight its parts and rearrange it by drag-and-drop parts of the tree.
+
+Some of them are 
+* react-arborist
+* react-d3-tree
+* react-dnd-treeview
+* react-konva
+
+Due to the assignment timeframe I decided to go with quick-and-easy solution, `react-dnd-treeview`, because it already handles the tree structure in a reliable way, it's very flexible in terms of nodes rendering, it allows styling of the nodes, and last but not least, gracefully manages the drag-and-drop functionality.
 
 ## Testing
 
