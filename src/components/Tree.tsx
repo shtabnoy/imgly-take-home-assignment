@@ -58,7 +58,10 @@ function Tree({ nodes }: TreeComponentProps) {
         rootId={'0'}
         onDrop={handleDrop}
         render={(node, { depth, isOpen, onToggle }) => (
-          <div style={{ marginLeft: depth * 10 }}>
+          <div
+            style={{ marginLeft: depth * 10 }}
+            className="text-xl cursor-pointer hover:bg-gray-200"
+          >
             {node.droppable && (
               <span onClick={onToggle}>{isOpen ? '[-]' : '[+]'}</span>
             )}

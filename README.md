@@ -13,6 +13,7 @@ renders it on the screen, and allows a user to interact with it (e.g., higlight 
 2. Jest, and react-testing-library (RTL) for testing.
 3. TanStack Query for data fetching and state management.
 4. React DnD Treeview for rendering tree structures and implementing drag-and-drop functionality.
+5. TailwindCSS for styling
 
 ### Motivation
 
@@ -50,3 +51,7 @@ which is stored in the `.env` file as `VITE_IMGLY_API_URL`
 ### API calls
 
 The actual API calls to the endpoints are done with HTML `fetch`, and located in the `src/api` folder.
+
+## Styling
+
+Tailwind CSS is used for styling. The configuration is defined in the `tailwind.config.js` file and the styles are imported in `src/index.css`.
