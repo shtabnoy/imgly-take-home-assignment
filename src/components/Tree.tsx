@@ -41,6 +41,36 @@ function transformToFlatStructure(nodes?: ImglyNode[]): ReactDndNode[] {
   return result;
 }
 
+// Transform back to the recursive structure to conform with the original data structure.
+function transformToRecursiveStructure(flatData: ReactDndNode[]): ImglyNode[] {
+  const idMap: { [key: string]: ImglyNode } = {};
+  const rootNodes: ImglyNode[] = [];
+
+  flatData.forEach((node) => {
+    const dataEntry: ImglyNode = {
+      id: node.id.toString(),
+      label: node.text,
+      children: [],
+    };
+    idMap[node.id] = dataEntry;
+  });
+
+  flatData.forEach((node) => {
+    const dataEntry = idMap[node.id];
+    if (node.parent === '0') {
+      rootNodes.push(dataEntry);
+    } else {
+      const parent = idMap[node.parent];
+      if (parent) {
+        parent.children = parent.children || [];
+        parent.children.push(dataEntry);
+      }
+    }
+  });
+
+  return rootNodes;
+}
+
 function getDescendants(tree: ReactDndNode[], nodeId: string): string[] {
   const descendants: string[] = [];
   const stack: string[] = [nodeId];
@@ -68,7 +98,10 @@ function Tree({ nodes }: TreeComponentProps) {
   const initialData = transformToFlatStructure(nodes);
   const [treeData, setTreeData] = useState(initialData);
 
-  const handleDrop = (newTreeData: ReactDndNode[]) => setTreeData(newTreeData);
+  const handleDrop = (newTreeData: ReactDndNode[]) => {
+    console.log(transformToRecursiveStructure(newTreeData));
+    setTreeData(newTreeData);
+  };
 
   const handleClick = useCallback(
     (node: ReactDndNode) => {
