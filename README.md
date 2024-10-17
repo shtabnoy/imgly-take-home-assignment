@@ -1,5 +1,9 @@
 # Img.ly Assignment
 
+## Preview
+
+Preview is available [here](https://imgly-take-home-assigment.netlify.app/) as a netlify app.
+
 ## Description
 
 This is the Img.ly home assingment, an app that fetches a tree structure, 
