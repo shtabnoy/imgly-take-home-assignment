@@ -7,7 +7,7 @@ import {
   NodeModel as ReactDndNode,
   Tree as ReactDndTree,
 } from '@minoru/react-dnd-treeview';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 // Transform the endpoint recursive structure to the fat structure that the Tree component expects.
 function transformToFlatStructure(nodes?: ImglyNode[]): ReactDndNode[] {
@@ -41,15 +41,50 @@ function transformToFlatStructure(nodes?: ImglyNode[]): ReactDndNode[] {
   return result;
 }
 
+function getDescendants(tree: ReactDndNode[], nodeId: string): string[] {
+  const descendants: string[] = [];
+  const stack: string[] = [nodeId];
+
+  while (stack.length > 0) {
+    const currentId = stack.pop()!;
+    const children = tree.filter((node) => node.parent === currentId);
+
+    children.forEach((child) => {
+      descendants.push(child.id.toString());
+      stack.push(child.id.toString());
+    });
+  }
+
+  return descendants;
+}
+
 interface TreeComponentProps {
   nodes: ImglyNode[] | undefined;
 }
 
 function Tree({ nodes }: TreeComponentProps) {
-  const initialData = transformToFlatStructure(nodes);
+  const [highlightedNodes, setHighlightedNodes] = useState<string[]>([]);
 
+  const initialData = transformToFlatStructure(nodes);
   const [treeData, setTreeData] = useState(initialData);
+
   const handleDrop = (newTreeData: ReactDndNode[]) => setTreeData(newTreeData);
+
+  const handleClick = useCallback(
+    (node: ReactDndNode) => {
+      const nodeId = node.id.toString();
+
+      if (highlightedNodes.includes(nodeId) && highlightedNodes[0] === nodeId) {
+        setHighlightedNodes([]);
+        return;
+      }
+
+      const descendants = getDescendants(treeData, nodeId);
+      setHighlightedNodes([nodeId, ...descendants]);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [treeData]
+  );
 
   return (
     <DndProvider backend={MultiBackend} options={getBackendOptions()}>
@@ -61,8 +96,13 @@ function Tree({ nodes }: TreeComponentProps) {
         onDrop={handleDrop}
         render={(node, { depth, isOpen, onToggle }) => (
           <div
-            style={{ marginLeft: depth * 10 }}
-            className="text-xl cursor-pointer hover:bg-gray-200"
+            style={{ marginLeft: depth * 30 }}
+            className={`text-xl cursor-pointer hover:bg-gray-200 ${
+              highlightedNodes.includes(node.id.toString())
+                ? 'bg-yellow-200'
+                : 'bg-transparent'
+            }`}
+            onClick={() => handleClick(node)}
           >
             {node.droppable && (
               <span onClick={onToggle}>{isOpen ? '[-]' : '[+]'}</span>
