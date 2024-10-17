@@ -54,6 +54,8 @@ function Tree({ nodes }: TreeComponentProps) {
   return (
     <DndProvider backend={MultiBackend} options={getBackendOptions()}>
       <ReactDndTree
+        sort={false}
+        initialOpen
         tree={treeData}
         rootId={'0'}
         onDrop={handleDrop}
@@ -65,7 +67,7 @@ function Tree({ nodes }: TreeComponentProps) {
             {node.droppable && (
               <span onClick={onToggle}>{isOpen ? '[-]' : '[+]'}</span>
             )}
-            {node.text}
+            &#8226; {node.text}
           </div>
         )}
       />
