@@ -1,7 +1,8 @@
 import { NodeModel as TreeViewNode } from '@minoru/react-dnd-treeview';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNodeInfo } from '../api';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import Accordion from './Accordion';
 
 interface TreeItemProps {
   depth: number;
@@ -20,6 +21,8 @@ function TreeItem({
   onClick,
   onToggle,
 }: TreeItemProps) {
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+
   const { refetch, data } = useQuery({
     queryKey: ['nodeInfo', node.id],
     queryFn: () => fetchNodeInfo(node.id.toString()),
@@ -34,9 +37,11 @@ function TreeItem({
       if (!node.droppable && data === undefined) {
         refetch();
       }
+
+      setIsAccordionOpen(!isAccordionOpen);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data]
+    [data, isAccordionOpen]
   );
 
   return (
@@ -49,10 +54,24 @@ function TreeItem({
       }`}
       onClick={() => handleClick(node)}
     >
-      {node.droppable && (
-        <span onClick={onToggle}>{isOpen ? '[-]' : '[+]'}</span>
+      <div className="flex items-center">
+        {node.droppable && (
+          <span onClick={onToggle}>{isOpen ? '[-]' : '[+]'}</span>
+        )}
+        &#8226; {node.text}
+      </div>
+      {data && isAccordionOpen && (
+        <Accordion>
+          <dl className="space-y-2">
+            {Object.entries(data).map(([key, value]) => (
+              <div key={key} className="flex">
+                <dt className="font-semibold">{key}:</dt>
+                <dd className="ml-2">{String(value)}</dd>
+              </div>
+            ))}
+          </dl>
+        </Accordion>
       )}
-      &#8226; {node.text}
     </div>
   );
 }
