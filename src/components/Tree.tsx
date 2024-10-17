@@ -21,6 +21,7 @@ interface TreeComponentProps {
 
 function Tree({ nodes }: TreeComponentProps) {
   const [highlightedNodes, setHighlightedNodes] = useState<string[]>([]);
+  const [openAccordionId, setOpenAccordionId] = useState<string | null>(null);
 
   const initialData = transformToFlatStructure(nodes);
   const [treeData, setTreeData] = useState(initialData);
@@ -49,24 +50,26 @@ function Tree({ nodes }: TreeComponentProps) {
   return (
     <DndProvider backend={MultiBackend} options={getBackendOptions()}>
       <ReactDndTree
-        sort={false}
         initialOpen
+        sort={false}
         tree={treeData}
         rootId={'0'}
-        onDrop={handleDrop}
         classes={{
           root: 'p-10',
           dropTarget: 'bg-yellow-400',
           draggingSource: 'opacity-30',
         }}
+        onDrop={handleDrop}
         render={(node, { depth, isOpen, onToggle }) => (
           <TreeItem
             depth={depth}
             node={node}
-            highlightedNodes={highlightedNodes}
             isOpen={isOpen}
+            highlightedNodes={highlightedNodes}
+            openAccordionId={openAccordionId}
             onClick={handleClick}
             onToggle={onToggle}
+            setOpenAccordionId={setOpenAccordionId}
           />
         )}
       />

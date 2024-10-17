@@ -1,7 +1,7 @@
 import { NodeModel as TreeViewNode } from '@minoru/react-dnd-treeview';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNodeInfo } from '../api';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import Accordion from './Accordion';
 
 interface TreeItemProps {
@@ -9,8 +9,10 @@ interface TreeItemProps {
   node: TreeViewNode;
   highlightedNodes: string[];
   isOpen: boolean;
+  openAccordionId: string | null;
   onClick(node: TreeViewNode): void;
   onToggle(): void;
+  setOpenAccordionId: (id: string | null) => void;
 }
 
 function TreeItem({
@@ -18,17 +20,22 @@ function TreeItem({
   node,
   highlightedNodes,
   isOpen,
+  openAccordionId,
   onClick,
   onToggle,
+  setOpenAccordionId,
 }: TreeItemProps) {
-  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-
   const { refetch, data } = useQuery({
     queryKey: ['nodeInfo', node.id],
     queryFn: () => fetchNodeInfo(node.id.toString()),
     enabled: false,
     retry: false,
   });
+
+  const isAccordionOpen = useMemo(
+    () => openAccordionId === node.id.toString(),
+    [node.id, openAccordionId]
+  );
 
   const handleClick = useCallback(
     (node: TreeViewNode) => {
@@ -38,7 +45,7 @@ function TreeItem({
         refetch();
       }
 
-      setIsAccordionOpen(!isAccordionOpen);
+      setOpenAccordionId(isAccordionOpen ? null : node.id.toString());
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [data, isAccordionOpen]
