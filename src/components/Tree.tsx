@@ -65,7 +65,7 @@ function Tree({ nodes }: TreeComponentProps) {
             node={node}
             highlightedNodes={highlightedNodes}
             isOpen={isOpen}
-            handleClick={handleClick}
+            onClick={handleClick}
             onToggle={onToggle}
           />
         )}
