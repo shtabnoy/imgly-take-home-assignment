@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import TreeComponent from './components/Tree';
 import { fetchNodes } from './api';
+import Spinner from './components/Spinner';
 
 function App() {
   const {
@@ -12,11 +13,13 @@ function App() {
     queryFn: fetchNodes,
   });
 
-  if (isLoading) return <>Loading...</>;
-
-  if (error) return <>Error: {error.message}</>;
-
-  return <TreeComponent nodes={nodes} />;
+  return (
+    <>
+      {isLoading && <Spinner absolute />}
+      {error && <>Error: {error.message}</>}
+      {nodes && <TreeComponent nodes={nodes} />}
+    </>
+  );
 }
 
 export default App;

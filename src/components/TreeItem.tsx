@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchNodeInfo } from '../api';
 import { useCallback, useMemo } from 'react';
 import Accordion from './Accordion';
+import Spinner from './Spinner';
 
 interface TreeItemProps {
   depth: number;
@@ -25,7 +26,7 @@ function TreeItem({
   onToggle,
   setOpenAccordionId,
 }: TreeItemProps) {
-  const { refetch, data } = useQuery({
+  const { refetch, data, isLoading } = useQuery({
     queryKey: ['nodeInfo', node.id],
     queryFn: () => fetchNodeInfo(node.id.toString()),
     enabled: false,
@@ -66,6 +67,7 @@ function TreeItem({
           <span onClick={onToggle}>{isOpen ? '[-]' : '[+]'}</span>
         )}
         &#8226; {node.text}
+        {isLoading && <Spinner />}
       </div>
       {data && isAccordionOpen && (
         <Accordion>
