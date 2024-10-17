@@ -94,6 +94,11 @@ function Tree({ nodes }: TreeComponentProps) {
         tree={treeData}
         rootId={'0'}
         onDrop={handleDrop}
+        classes={{
+          root: 'p-10',
+          dropTarget: 'bg-yellow-400',
+          draggingSource: 'opacity-30',
+        }}
         render={(node, { depth, isOpen, onToggle }) => (
           <div
             style={{ marginLeft: depth * 30 }}
