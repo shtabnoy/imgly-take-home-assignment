@@ -60,15 +60,13 @@ function Tree({ nodes }: TreeComponentProps) {
           draggingSource: 'opacity-30',
         }}
         onDrop={handleDrop}
-        render={(node, { depth, isOpen, onToggle }) => (
+        render={(node, { depth }) => (
           <TreeItem
             depth={depth}
             node={node}
-            isOpen={isOpen}
             highlightedNodes={highlightedNodes}
             openAccordionId={openAccordionId}
             onClick={handleClick}
-            onToggle={onToggle}
             setOpenAccordionId={setOpenAccordionId}
           />
         )}

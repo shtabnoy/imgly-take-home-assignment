@@ -10,10 +10,8 @@ interface TreeItemProps {
   depth: number;
   node: TreeViewNode;
   highlightedNodes: string[];
-  isOpen: boolean;
   openAccordionId: string | null;
   onClick(node: TreeViewNode): void;
-  onToggle(): void;
   setOpenAccordionId: (id: string | null) => void;
 }
 
@@ -21,10 +19,8 @@ function TreeItem({
   depth,
   node,
   highlightedNodes,
-  isOpen,
   openAccordionId,
   onClick,
-  onToggle,
   setOpenAccordionId,
 }: TreeItemProps) {
   const { refetch, data, isLoading, error } = useQuery({
@@ -64,9 +60,6 @@ function TreeItem({
       onClick={() => handleClick(node)}
     >
       <div className="flex items-center">
-        {node.droppable && (
-          <span onClick={onToggle}>{isOpen ? '[-]' : '[+]'}</span>
-        )}
         &#8226; {node.text}
         {isLoading && <Spinner />}
       </div>
