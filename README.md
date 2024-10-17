@@ -14,6 +14,7 @@ renders it on the screen, and allows a user to interact with it (e.g., higlight 
 3. TanStack Query for data fetching and state management.
 4. React DnD Treeview for rendering tree structures and implementing drag-and-drop functionality.
 5. TailwindCSS for styling
+6. ESLint for linting
 
 ### Motivation
 
@@ -28,9 +29,31 @@ Some of them are
 
 Due to the assignment timeframe I decided to go with quick-and-easy solution, `react-dnd-treeview`, because it already handles the tree structure in a reliable way, it's very flexible in terms of nodes rendering, it allows styling of the nodes, and last but not least, gracefully manages the drag-and-drop functionality.
 
+## Installation
+
+1. Clone the repository:
+
+```
+git clone git@github.com:shtabnoy/imgly-take-home-assignment.git
+cd imgly-take-home-assignment
+```
+
+2. Install dependencies:
+
+```
+yarn
+```
+
+3. To start the development server, run:
+```
+yarn dev
+```
+
+
 ## Testing
 
-For testing purposes Jest and React-testing-library (RTL) are used.
+For testing purposes Jest and React-testing-library (RTL) are used, and a bunch of packages to run typescript in Jest,
+such as babel with several presets, and ts-node.
 
 The tests are located in the `src/App.test.tsx file`.
 
@@ -47,6 +70,13 @@ The app fetches data from the following API endpoint:
 https://ubique.img.ly/frontend-tha
 ```
 which is stored in the `.env` file as `VITE_IMGLY_API_URL`
+
+### Mock Data
+
+Mock data for testing is available in the `src/mocks/` directory:
+
+* nodes.js
+* nodeInfo.js
 
 ### API calls
 
